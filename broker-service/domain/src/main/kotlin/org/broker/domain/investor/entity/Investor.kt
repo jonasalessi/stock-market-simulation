@@ -26,7 +26,7 @@ class Investor private constructor(
     }
 
     companion object {
-        fun create(name: String, birthday: LocalDate, city: String, country: String, cpf: String) =
+        fun create(name: String, birthday: LocalDate, city: String, country: String, cpf: Cpf) =
             Investor(
                 id = InvestorId(UUID.randomUUID()),
                 name = name,
@@ -35,8 +35,8 @@ class Investor private constructor(
                 country = country,
                 account = Account(
                     id = AccountId(UUID.randomUUID()),
-                    cpf = Cpf(cpf),
-                    status = AccountStatus.WAITING_DEPOSIT
+                    cpf = cpf,
+                    status = AccountStatus.WAITING_BROKER_CHECKING
                 )
             )
     }

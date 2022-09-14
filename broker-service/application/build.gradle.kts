@@ -1,5 +1,9 @@
+plugins {
+    id("quality")
+}
+
 dependencies {
-    compileOnly(project(":broker-service:domain"))
+    implementation(project(":broker-service:domain"))
     compileOnly("jakarta.enterprise:jakarta.enterprise.cdi-api:2.0.2")
 
     // Mediator
