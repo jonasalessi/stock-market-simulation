@@ -9,7 +9,7 @@ PS. Don't take seriously the domain concept because it's much more complicated t
 
 **Stock Exchange** will be responsible to hold the shares, company, and shareholders' information
 
-**Auction Exchange** will execute the bid and ask (buy and ask) and define the price
+**Auction Exchange** will execute the bid and ask (buy and sell) and define the price
 
 **Broker** will manage the accounts of the investors holding their shares, their money and send their orders to the auction
 
