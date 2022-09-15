@@ -34,6 +34,7 @@ data class Cpf(
     private fun calculateRestDigit(cpfDigits: Int) =
         if (cpfDigits < 2) 0 else CPF_SIZE - cpfDigits
 
+    override fun toString() = digits
 
     companion object {
         const val CPF_SIZE = 11
