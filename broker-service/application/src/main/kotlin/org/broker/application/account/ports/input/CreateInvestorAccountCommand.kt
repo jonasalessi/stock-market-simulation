@@ -1,4 +1,4 @@
-package org.broker.application.investor.ports.input
+package org.broker.application.account.ports.input
 
 import com.trendyol.kediatr.Command
 import java.time.LocalDate

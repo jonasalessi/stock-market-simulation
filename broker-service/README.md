@@ -17,4 +17,7 @@
         - The broker is only the agent that buys or sells shares to the investor. The investor can change the broker without losing yours shares
 ## Event flow
 
-![Context Diagram](diagram.excalidraw.svg)
+![Event Flow](docs/flow.excalidraw.svg)
+
+## Account Status Flow
+![Account Status Flow](docs/accountStatusflow.excalidraw.svg)

@@ -1,6 +1,6 @@
-package org.broker.domain.investor.vo
+package org.broker.domain.account.vo
 
-import org.broker.domain.investor.exception.CpfInvalidException
+import org.broker.domain.account.exception.CpfInvalidException
 
 data class Cpf(
     val digits: String

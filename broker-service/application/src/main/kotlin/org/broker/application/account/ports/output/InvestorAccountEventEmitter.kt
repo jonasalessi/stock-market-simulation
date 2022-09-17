@@ -1,4 +1,4 @@
-package org.broker.application.investor.ports.output
+package org.broker.application.account.ports.output
 
 import org.shared.domain.vo.AccountId
 

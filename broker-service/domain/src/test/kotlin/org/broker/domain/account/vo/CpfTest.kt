@@ -1,7 +1,6 @@
-package org.broker.domain.investor.vo
+package org.broker.domain.account.vo
 
-import org.broker.domain.investor.exception.CpfInvalidException
-import org.broker.domain.investor.vo.Cpf
+import org.broker.domain.account.exception.CpfInvalidException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test

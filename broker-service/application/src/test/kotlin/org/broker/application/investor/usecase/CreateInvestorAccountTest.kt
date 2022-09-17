@@ -1,10 +1,9 @@
 package org.broker.application.investor.usecase
 
-import org.broker.application.investor.ports.input.CreateInvestorAccountCommand
-import org.broker.domain.investor.entity.Investor
-import org.broker.domain.investor.exception.CpfDuplicatedException
-import org.broker.domain.investor.repository.InvestorRepository
-import org.broker.domain.investor.vo.Cpf
+import org.broker.application.account.ports.input.CreateInvestorAccountCommand
+import org.broker.application.account.usecase.CreateInvestorAccount
+import org.broker.domain.account.exception.CpfDuplicatedException
+import org.broker.domain.account.vo.Cpf
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,13 +22,13 @@ class CreateInvestorAccountTest {
         cpf = "797.512.620-97"
     )
     private lateinit var investorAccountEventEmitter: InvestorAccountEventEmitterMem
-    private lateinit var repository: InvestorRepositoryMem
+    private lateinit var repository: AccountRepositoryMem
     private lateinit var createInvestorAccount: CreateInvestorAccount
 
     @BeforeEach
     fun setup() {
         investorAccountEventEmitter = InvestorAccountEventEmitterMem()
-        repository = InvestorRepositoryMem()
+        repository = AccountRepositoryMem()
         createInvestorAccount = CreateInvestorAccount(investorAccountEventEmitter, repository)
     }
 
@@ -48,7 +47,7 @@ class CreateInvestorAccountTest {
 
         assertEquals(1, repository.data.size) {"Should save the new investor with cpf ${command.cpf}"}
         val investor = repository.data[0]
-        assertEquals(investor.account.cpf, Cpf(command.cpf))
+        assertEquals(investor.investor.cpf, Cpf(command.cpf))
     }
 
     @Test
