@@ -1,7 +1,7 @@
 package org.broker.application.investor.usecase
 
 import org.broker.domain.account.entity.Account
-import org.broker.domain.account.repository.AccountRepository
+import org.broker.application.account.ports.output.AccountRepository
 import org.broker.domain.account.vo.Cpf
 import org.shared.domain.vo.AccountId
 

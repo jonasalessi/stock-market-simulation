@@ -27,7 +27,7 @@ class ApproveAccountTest {
     }
 
     @Test
-    fun `should return an exception with message Account id 43519dc2-aca0-40d2-b006-6cc64903be71 not found!`() {
+    fun `should return an exception AccountNotFoundException when the account does not exist`() {
         val accountId = AccountId(UUID.fromString("43519dc2-aca0-40d2-b006-6cc64903be71"))
         val notification = AccountApprovedNotification((AccountApproved(accountId)))
         val ex = assertThrows<AccountNotFoundException> {
@@ -37,7 +37,7 @@ class ApproveAccountTest {
     }
 
     @Test
-    fun `should update the account status to Approved`() {
+    fun `should update the account status to waiting deposit when the account is approved`() {
         val account = Account.create(
             name = "Jonas Alessi",
             birthday = LocalDate.of(1990, 2, 14),
@@ -48,6 +48,6 @@ class ApproveAccountTest {
         val accountId = account.id
         repository.save(account)
         approveAccount.handle(AccountApprovedNotification(AccountApproved(accountId)))
-        assertEquals(AccountStatus.ACTIVE, repository.findById(accountId)?.status)
+        assertEquals(AccountStatus.WAITING_DEPOSIT, repository.findById(accountId)?.status)
     }
 }

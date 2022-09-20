@@ -17,13 +17,22 @@ class Account private constructor(
     var status: AccountStatus = AccountStatus.WAITING_BROKER_CHECKING
         private set
 
-    fun updateStatus(newStatus: AccountStatus) {
-        if (newStatus == AccountStatus.REJECTED && status != AccountStatus.WAITING_BROKER_CHECKING)
+    fun approve() {
+        status = AccountStatus.WAITING_DEPOSIT
+    }
+
+    fun reject() {
+        if (status != AccountStatus.WAITING_BROKER_CHECKING) {
             throw AccountFlowStatusException("Reject the account is only allowed in document verification stage")
-        if (newStatus == AccountStatus.ACTIVE && status != AccountStatus.WAITING_DEPOSIT) {
+        }
+        status = AccountStatus.REJECTED
+    }
+
+    fun active() {
+        if (status != AccountStatus.WAITING_DEPOSIT) {
             throw AccountFlowStatusException("Before approve it should wait for deposit")
         }
-        status = newStatus
+        status = AccountStatus.ACTIVE
     }
 
     companion object {

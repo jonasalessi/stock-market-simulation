@@ -1,4 +1,4 @@
-package org.broker.domain.account.repository
+package org.broker.application.account.ports.output
 
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.vo.Cpf

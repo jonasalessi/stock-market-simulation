@@ -27,34 +27,32 @@ class AccountTest {
     }
 
     @Test
-    fun `should accept only the account status active after wait for deposit`() {
+    fun `should active account only after account approval passed by waiting for deposit phase`() {
         val account = createAccount()
-        assertEquals(AccountStatus.WAITING_BROKER_CHECKING, account.status)
-        val ex = assertThrows<AccountFlowStatusException> { account.updateStatus(AccountStatus.ACTIVE) }
+        val ex = assertThrows<AccountFlowStatusException> { account.active() }
         assertEquals("Before approve it should wait for deposit", ex.message)
-        account.updateStatus(AccountStatus.WAITING_DEPOSIT)
-        account.updateStatus(AccountStatus.ACTIVE)
+        account.approve()
+        assertEquals(AccountStatus.WAITING_DEPOSIT, account.status)
+        account.active()
         assertEquals(AccountStatus.ACTIVE, account.status)
     }
 
     @Test
-    fun `should accept reject account in waiting broker checking stage`() {
+    fun `should reject account when is in waiting broker checking phase`() {
         val accountWaitingBroker = createAccount()
-        assertEquals(AccountStatus.WAITING_BROKER_CHECKING, accountWaitingBroker.status)
-        accountWaitingBroker.updateStatus(AccountStatus.REJECTED)
+        accountWaitingBroker.reject()
         assertEquals(AccountStatus.REJECTED, accountWaitingBroker.status)
     }
 
     @Test
-    fun `should not accept reject account when is not waiting broker checking stage`() {
+    fun `should not reject account when it was approved or activated`() {
         val accountWaitingBroker = createAccount()
-        assertEquals(AccountStatus.WAITING_BROKER_CHECKING, accountWaitingBroker.status)
-        accountWaitingBroker.updateStatus(AccountStatus.WAITING_DEPOSIT)
-        val rej1 = assertThrows<AccountFlowStatusException> { accountWaitingBroker.updateStatus(AccountStatus.REJECTED) }
-        assertEquals("Reject the account is only allowed in document verification stage", rej1.message)
-        accountWaitingBroker.updateStatus(AccountStatus.ACTIVE)
-        val rej2 = assertThrows<AccountFlowStatusException> { accountWaitingBroker.updateStatus(AccountStatus.REJECTED) }
-        assertEquals("Reject the account is only allowed in document verification stage", rej2.message)
+        accountWaitingBroker.approve()
+        val cannotReject = assertThrows<AccountFlowStatusException> { accountWaitingBroker.reject() }
+        accountWaitingBroker.active()
+        val rejectEx = assertThrows<AccountFlowStatusException> { accountWaitingBroker.reject() }
+        assertEquals("Reject the account is only allowed in document verification stage", cannotReject.message)
+        assertEquals("Reject the account is only allowed in document verification stage", rejectEx.message)
     }
 
     private fun createAccount(birthday: LocalDate = LocalDate.of(1990, 2, 14)): Account {

@@ -2,22 +2,22 @@ package org.broker.application.account.usecase
 
 import com.trendyol.kediatr.CommandHandler
 import io.quarkus.runtime.Startup
-import org.broker.application.account.ports.input.CreateInvestorAccountCommand
-import org.broker.application.account.ports.output.InvestorAccountEventEmitter
+import org.broker.application.account.ports.input.CreateAccountCommand
+import org.broker.application.account.ports.output.AccountEventEmitter
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.exception.CpfDuplicatedException
-import org.broker.domain.account.repository.AccountRepository
+import org.broker.application.account.ports.output.AccountRepository
 import org.broker.domain.account.vo.Cpf
 import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 @Startup
-class CreateInvestorAccount(
-    val investorAccountEventEmitter: InvestorAccountEventEmitter,
+class CreateAccount(
+    val accountEventEmitter: AccountEventEmitter,
     val repository: AccountRepository
-) : CommandHandler<CreateInvestorAccountCommand> {
+) : CommandHandler<CreateAccountCommand> {
 
-    override fun handle(command: CreateInvestorAccountCommand) {
+    override fun handle(command: CreateAccountCommand) {
         val cpf = Cpf(command.cpf)
         if (repository.existsByCpf(cpf)) {
             throw CpfDuplicatedException(cpf)
@@ -30,6 +30,6 @@ class CreateInvestorAccount(
             cpf = cpf
         )
         repository.save(account)
-        investorAccountEventEmitter.emitAccountCreated(account.id, account.investor.cpf.digits)
+        accountEventEmitter.emitAccountCreated(account.id, account.investor.cpf.digits)
     }
 }

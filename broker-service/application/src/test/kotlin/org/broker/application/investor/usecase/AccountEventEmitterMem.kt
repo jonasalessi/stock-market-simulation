@@ -1,12 +1,12 @@
 package org.broker.application.investor.usecase
 
-import org.broker.application.account.ports.output.InvestorAccountEventEmitter
+import org.broker.application.account.ports.output.AccountEventEmitter
 import org.shared.domain.event.AccountApproved
 import org.shared.domain.event.AccountCreated
 import org.shared.domain.event.AccountRejected
 import org.shared.domain.vo.AccountId
 
-class InvestorAccountEventEmitterMem : InvestorAccountEventEmitter {
+class AccountEventEmitterMem : AccountEventEmitter {
 
     val events = mutableListOf<Any>()
 
