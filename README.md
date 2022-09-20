@@ -14,4 +14,4 @@ PS. Don't take seriously the domain concept because it's much more complicated t
 **Broker** will manage the accounts of the investors holding their shares, their money and send their orders to the auction
 
 ## Requirements
-[Broker](broker-service/README.md)
+[Broker](broker-service)
