@@ -1,7 +1,9 @@
 package org.broker.application.account.handler
 
-import org.broker.application.investor.ports.output.InvestorAccountEventEmitter
-import org.shared.domain.event.AccountCreated
+import com.trendyol.kediatr.NotificationHandler
+import io.quarkus.runtime.Startup
+import org.broker.application.account.ports.input.AccountCreatedNotification
+import org.broker.application.account.ports.output.AccountEventEmitter
 import javax.enterprise.context.ApplicationScoped
 import kotlin.random.Random
 
@@ -11,17 +13,18 @@ import kotlin.random.Random
  * Otherwise will create the event AccountRejected
  */
 @ApplicationScoped
+@Startup
 class CheckAccountDocument(
-    val investorAccountEventEmitter: InvestorAccountEventEmitter
-) {
+    val eventEmitter: AccountEventEmitter
+) : NotificationHandler<AccountCreatedNotification> {
 
-    fun execute(accountCreated: AccountCreated) {
+    override fun handle(notification: AccountCreatedNotification) {
         Thread.sleep(Random.nextLong(1000, 10_000))
-
-        if ((accountCreated.cpf.substring(0,1).toInt() % 2) == 0) {
-            investorAccountEventEmitter.emitAccountApproved(accountCreated.accountId)
+        val (accountCreated) = notification
+        if ((accountCreated.cpf.substring(0, 1).toInt() % 2) == 0) {
+            eventEmitter.emitAccountApproved(accountCreated.accountId)
         } else {
-            investorAccountEventEmitter.emitAccountRejected(accountCreated.accountId)
+            eventEmitter.emitAccountRejected(accountCreated.accountId)
         }
     }
 }
