@@ -23,10 +23,12 @@ Below the use cases with the functional requirements.
         - To buy they must have the balance equivalent to the total amount plus fees
         - Both operations are possible between 10 am and 5 pm (it's the period that the market is open)
         - For fractional shares the quantity must be minimum 1
-        - For integral shares the quantity must be minimum 100 and in chuncks of 100
+        - For integral shares the quantity must be minimum 100 and in chunks of 100
         - It's possible place an order for only one share at time
     - Highlights:
-        - The broker is only the agent that buys or sells shares for the investor. The investor can change the broker without losing yours shares
+        - The broker is only the agent that buys or sells shares for the investor and holds the shares. The investor can change the broker migrating your shares to the new one
         - Share are divided in 2 categories, fractional(minimum 1 share) and integral(chunks of 100)
         - The fee is fixed 2% of the total amount
+    - Post Conditions
+      - A order should be sent to the Stock Exchange where for them buy is bid and sell is ask
 
