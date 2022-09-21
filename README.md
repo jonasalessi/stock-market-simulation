@@ -3,7 +3,7 @@ This application creates a fake process between brokers and a stock exchange by 
 
 PS. Don't take seriously the domain concept because it's much more complicated than this =D
 
-## Boundary Context
+## Bounded Context
 
 ![Context Diagram](documentation/boundaries.excalidraw.svg)
 
