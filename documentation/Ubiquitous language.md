@@ -5,7 +5,7 @@ share=stock
 
 # Used by our user 
 bid
-
+ticker = symbol that represents the company, it can have many with 2 different categories (fractional and integral)
 ask
 
 share
