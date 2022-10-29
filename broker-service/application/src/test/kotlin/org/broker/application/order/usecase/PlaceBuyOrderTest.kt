@@ -5,6 +5,7 @@ import org.broker.application.order.fake.OrderRepositoryMem
 import org.broker.application.order.fake.ShareRepositoryMem
 import org.broker.application.order.fake.UserAccountGatewayMem
 import org.broker.application.order.ports.input.BuyOrderCommand
+import org.broker.application.order.service.OrderShareService
 import org.broker.application.order.stub.TraderClockStub
 import org.broker.domain.account.exception.AccountNotFoundException
 import org.broker.domain.order.entity.OrderStatus
@@ -15,8 +16,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.shared.domain.entity.Share
 import org.shared.domain.entity.ShareCategory
+import org.shared.domain.event.order.OrderCreated
 import org.shared.domain.event.order.OrderType
-import org.shared.domain.exception.ShareNotFoundException
 import org.shared.domain.vo.AccountId
 import org.shared.domain.vo.ShareId
 import java.math.BigDecimal
@@ -45,26 +46,10 @@ class PlaceBuyOrderTest {
         userAccountGatewayMem = UserAccountGatewayMem()
         placeOrder = PlaceBuyOrder(
             clock = TraderClockStub(openTime),
-            orderRepository = orderRepositoryMem,
-            shareRepository = shareRepositoryMem,
+            orderShareService = OrderShareService(shareRepositoryMem, orderRepositoryMem),
             userAccount = userAccountGatewayMem,
             eventEmitter = eventEmitter
         )
-    }
-
-    @Test
-    fun `should return an exception ShareNotFoundException when the GGBR4 does not exists`() {
-        val ex = assertThrows<ShareNotFoundException> {
-            placeOrder.handle(
-                BuyOrderCommand(
-                    shareId = ShareId("GGBR4"),
-                    price = BigDecimal("22"),
-                    quantity = 100,
-                    accountId = jacksonAccountId
-                )
-            )
-        }
-        assertThat(ex.message, equalTo("Share GGBR4 not found!"))
     }
 
     @Test
@@ -98,12 +83,16 @@ class PlaceBuyOrderTest {
 
         val event = eventEmitter.data.values.firstOrNull()
         val order = orderRepositoryMem.data.values.firstOrNull()
-        assertThat(order?.status, equalTo(OrderStatus.OPEN))
-        assertThat(event?.accountId, equalTo(command.accountId))
-        assertThat(event?.type, equalTo(OrderType.BUY))
-        assertThat(event?.price, equalTo(order?.price))
-        assertThat(event?.shareId, equalTo(command.shareId))
-        assertThat(event?.quantity, equalTo(order?.quantity))
+        val orderCreated = OrderCreated(
+            shareId = command.shareId,
+            orderId = order!!.id,
+            type = OrderType.BUY,
+            quantity = command.quantity,
+            price = command.price,
+            accountId = command.accountId
+        )
+        assertThat(order.status, equalTo(OrderStatus.OPEN))
+        assertThat(event, equalTo(orderCreated))
     }
 
     private fun persistJacksonAccountBalance() {

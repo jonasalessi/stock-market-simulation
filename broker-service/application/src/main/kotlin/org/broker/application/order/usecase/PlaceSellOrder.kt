@@ -4,6 +4,7 @@ import com.trendyol.kediatr.CommandHandler
 import io.quarkus.runtime.Startup
 import org.broker.application.order.ports.input.SellOrderCommand
 import org.broker.application.order.ports.output.*
+import org.broker.application.order.service.OrderShareService
 import org.broker.domain.account.exception.AccountShareNotFoundException
 import org.broker.domain.order.builder.newOrder
 import org.shared.domain.entity.Share
@@ -18,8 +19,7 @@ import javax.enterprise.context.ApplicationScoped
 @ApplicationScoped
 @Startup
 internal class PlaceSellOrder(
-    private val shareRepository: ShareRepository,
-    private val orderRepository: OrderRepository,
+    private val orderShareService: OrderShareService,
     private val clock: TraderClock,
     private val userAccount: UserAccountGateway,
     private val eventEmitter: OrderEventEmitter
@@ -27,7 +27,7 @@ internal class PlaceSellOrder(
 
     override fun handle(command: SellOrderCommand) {
         val (shareId, price, quantity, accountId) = command
-        val companyShare = findShareById(shareId)
+        val companyShare = orderShareService.findShareById(shareId)
         val accountShareBalance = getAccountShareBalance(accountId, shareId)
         val order = newOrder {
             inTradeClock = clock.now()
@@ -37,7 +37,7 @@ internal class PlaceSellOrder(
             }
         }
         order.trade(quantity, price)
-        orderRepository.save(order)
+        orderShareService.saveOrder(order)
         eventEmitter.emitOrderCreated(
             OrderCreated(
                 shareId = shareId,
@@ -52,8 +52,5 @@ internal class PlaceSellOrder(
 
     private fun getAccountShareBalance(accountId: AccountId, shareId: ShareId): Int =
         userAccount.getAccountShareQuantity(accountId, shareId) ?: throw AccountShareNotFoundException(shareId)
-
-    private fun findShareById(shareId: ShareId): Share =
-        shareRepository.findById(shareId) ?: throw ShareNotFoundException(shareId)
 
 }
