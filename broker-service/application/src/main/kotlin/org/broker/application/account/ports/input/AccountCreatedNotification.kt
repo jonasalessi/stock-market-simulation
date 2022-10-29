@@ -1,9 +1,9 @@
 package org.broker.application.account.ports.input
 
 import com.trendyol.kediatr.Notification
-import org.shared.domain.event.AccountApproved
-import org.shared.domain.event.AccountCreated
-import org.shared.domain.event.AccountRejected
+import org.shared.domain.event.account.AccountApproved
+import org.shared.domain.event.account.AccountCreated
+import org.shared.domain.event.account.AccountRejected
 
 data class AccountCreatedNotification(val event: AccountCreated): Notification
 

@@ -1,13 +1,13 @@
 package org.broker.application.account.handler
 
+import org.broker.application.account.fake.AccountEventEmitterMem
 import org.broker.application.account.ports.input.AccountCreatedNotification
-import org.broker.application.investor.usecase.AccountEventEmitterMem
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.shared.domain.event.AccountApproved
-import org.shared.domain.event.AccountCreated
-import org.shared.domain.event.AccountRejected
+import org.shared.domain.event.account.AccountApproved
+import org.shared.domain.event.account.AccountCreated
+import org.shared.domain.event.account.AccountRejected
 import org.shared.domain.vo.AccountId
 import java.util.*
 

@@ -44,7 +44,7 @@ class CpfTest {
 
     companion object {
         @JvmStatic
-        fun validCpf() = Stream.of(
+        fun validCpf() = listOf(
             "787.101.780-23",
             "386.005.508-90",
             "397.974.888-02",

@@ -15,7 +15,7 @@ import kotlin.random.Random
 @ApplicationScoped
 @Startup
 class CheckAccountDocument(
-    val eventEmitter: AccountEventEmitter
+    private val eventEmitter: AccountEventEmitter
 ) : NotificationHandler<AccountCreatedNotification> {
 
     override fun handle(notification: AccountCreatedNotification) {
