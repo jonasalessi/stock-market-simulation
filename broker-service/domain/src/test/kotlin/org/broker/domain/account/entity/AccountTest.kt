@@ -56,12 +56,12 @@ class AccountTest {
     }
 
     private fun createAccount(birthday: LocalDate = LocalDate.of(1990, 2, 14)): Account {
-        val account = Account.create(
-            name = "Jonas Alessi",
-            birthday = birthday,
-            city = "Florianópolis",
-            country = "Brazil",
-            cpf = Cpf("797.512.620-97")
+        val account = Account.build(
+            withName = "Jonas Alessi",
+            withBirthday = birthday,
+            withCity = "Florianópolis",
+            withCountry = "Brazil",
+            withCpf = Cpf("797.512.620-97")
         )
         return account
     }

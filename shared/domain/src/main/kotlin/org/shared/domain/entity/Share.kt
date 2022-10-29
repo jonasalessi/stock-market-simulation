@@ -1,10 +1,14 @@
 package org.shared.domain.entity
 
-import java.math.BigDecimal
+import org.shared.domain.vo.ShareId
 
-class Share(override val id: String, val price: BigDecimal, val category: ShareCategory) : Entity<String>()
+class Share(override val id: ShareId, val category: ShareCategory) : Entity<ShareId>() {
+    companion object {
+        val EMPTY = Share(id = ShareId(""), category = ShareCategory.FRACTIONAL)
+    }
+}
 
-enum class ShareCategory{
+enum class ShareCategory {
     FRACTIONAL,
     INTEGRAL
 }

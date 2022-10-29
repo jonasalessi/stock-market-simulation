@@ -36,16 +36,16 @@ class Account private constructor(
     }
 
     companion object {
-        fun create(name: String, birthday: LocalDate, city: String, country: String, cpf: Cpf) =
+        fun build(withName: String, withBirthday: LocalDate, withCity: String, withCountry: String, withCpf: Cpf) =
             Account(
                 id = AccountId(UUID.randomUUID()),
                 investor = Investor(
                     id = InvestorId(UUID.randomUUID()),
-                    name = name,
-                    birthday = birthday,
-                    city = city,
-                    country = country,
-                    cpf = cpf
+                    name = withName,
+                    birthday = withBirthday,
+                    city = withCity,
+                    country = withCountry,
+                    cpf = withCpf
                 )
             )
     }

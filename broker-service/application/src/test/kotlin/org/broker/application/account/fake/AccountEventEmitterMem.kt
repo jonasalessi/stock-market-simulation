@@ -1,9 +1,9 @@
-package org.broker.application.investor.usecase
+package org.broker.application.account.fake
 
 import org.broker.application.account.ports.output.AccountEventEmitter
-import org.shared.domain.event.AccountApproved
-import org.shared.domain.event.AccountCreated
-import org.shared.domain.event.AccountRejected
+import org.shared.domain.event.account.AccountApproved
+import org.shared.domain.event.account.AccountCreated
+import org.shared.domain.event.account.AccountRejected
 import org.shared.domain.vo.AccountId
 
 class AccountEventEmitterMem : AccountEventEmitter {

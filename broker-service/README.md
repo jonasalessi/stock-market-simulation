@@ -20,14 +20,15 @@ Below the use cases with the functional requirements.
 
 - The investor should be able to place an order to buy or sell shares
     - Pre Conditions:
-        - To buy they must have the balance equivalent to the total amount plus fees
+        - To buy, the user must have the balance equivalent to the total amount plus fees
+        - To sell, the user must have the minimum quantity of company shares
         - Both operations are possible between 10 am and 5 pm (it's the period that the market is open)
-        - For fractional shares the quantity must be minimum 1
-        - For integral shares the quantity must be minimum 100 and in chunks of 100
+        - For buy/sell fractional shares the quantity must be minimum 1
+        - For buy/sell integral shares the quantity must be minimum 100 and in chunks of 100
     - Highlights:
-        - The broker is only the agent that buys or sells shares for the investor and holds the shares. The investor can change the broker migrating your shares to the new one
+        - The broker is only the agent that buy or sell shares for the investor and holds the shares. The investor can change the broker migrating your shares to the new one
         - Share are divided in 2 categories, fractional(minimum 1 share) and integral(chunks of 100)
-        - The fee is fixed 2% of the total amount
+        - The fee is 2% to buy and 5% to sell
     - Post Conditions
-      - A order should be sent to the Stock Exchange where for them buy is bid and sell is ask
+      - An order should be sent to the Stock Exchange and marked as open
 

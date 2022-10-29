@@ -1,4 +1,4 @@
-package org.broker.application.investor.usecase
+package org.broker.application.account.fake
 
 import org.broker.domain.account.entity.Account
 import org.broker.application.account.ports.output.AccountRepository
@@ -6,12 +6,11 @@ import org.broker.domain.account.vo.Cpf
 import org.shared.domain.vo.AccountId
 
 class AccountRepositoryMem : AccountRepository {
-    val data = mutableListOf<Account>()
+    val data = mutableMapOf<AccountId, Account>()
 
     override fun save(account: Account) {
-        data += account
+        data[account.id] = account
     }
-
-    override fun existsByCpf(cpf: Cpf) = data.any { it.investor.cpf == cpf }
-    override fun findById(id: AccountId) = data.find { it.id == id }
+    override fun existsByCpf(cpf: Cpf) = data.values.any { it.investor.cpf == cpf }
+    override fun findById(id: AccountId): Account? = data[id]
 }

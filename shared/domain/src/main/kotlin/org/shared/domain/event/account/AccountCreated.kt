@@ -1,4 +1,4 @@
-package org.shared.domain.event
+package org.shared.domain.event.account
 
 import org.shared.domain.vo.AccountId
 

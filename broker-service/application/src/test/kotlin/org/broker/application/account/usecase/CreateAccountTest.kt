@@ -1,14 +1,15 @@
-package org.broker.application.investor.usecase
+package org.broker.application.account.usecase
 
+import org.broker.application.account.fake.AccountEventEmitterMem
+import org.broker.application.account.fake.AccountRepositoryMem
 import org.broker.application.account.ports.input.CreateAccountCommand
-import org.broker.application.account.usecase.CreateAccount
 import org.broker.domain.account.exception.CpfDuplicatedException
 import org.broker.domain.account.vo.Cpf
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.shared.domain.event.AccountCreated
+import org.shared.domain.event.account.AccountCreated
 import java.time.LocalDate
 
 
@@ -46,7 +47,7 @@ class CreateAccountTest {
         createAccount.handle(command)
 
         assertEquals(1, repository.data.size) {"Should save the new investor with cpf ${command.cpf}"}
-        val investor = repository.data.first()
+        val investor = repository.data.values.first()
         assertEquals(investor.investor.cpf, Cpf(command.cpf))
     }
 

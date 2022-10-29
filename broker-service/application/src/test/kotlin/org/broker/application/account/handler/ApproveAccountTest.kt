@@ -1,7 +1,7 @@
 package org.broker.application.account.handler
 
 import org.broker.application.account.ports.input.AccountApprovedNotification
-import org.broker.application.investor.usecase.AccountRepositoryMem
+import org.broker.application.account.fake.AccountRepositoryMem
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.exception.AccountNotFoundException
 import org.broker.domain.account.vo.AccountStatus
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.shared.domain.event.AccountApproved
+import org.shared.domain.event.account.AccountApproved
 import org.shared.domain.vo.AccountId
 import java.time.LocalDate
 import java.util.*
@@ -38,12 +38,12 @@ class ApproveAccountTest {
 
     @Test
     fun `should update the account status to waiting deposit when the account is approved`() {
-        val account = Account.create(
-            name = "Jonas Alessi",
-            birthday = LocalDate.of(1990, 2, 14),
-            city = "Florianópolis",
-            country = "Brazil",
-            cpf = Cpf("797.512.620-97")
+        val account = Account.build(
+            withName = "Jonas Alessi",
+            withBirthday = LocalDate.of(1990, 2, 14),
+            withCity = "Florianópolis",
+            withCountry = "Brazil",
+            withCpf = Cpf("797.512.620-97")
         )
         val accountId = account.id
         repository.save(account)
