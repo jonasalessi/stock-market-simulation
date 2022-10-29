@@ -22,6 +22,8 @@ abstract class Order internal constructor(
         private set
     var quantity: Int? = null
         private set
+    var status: OrderStatus? = null
+        private set
 
     init {
         checkIfMarketIsOpen()
@@ -38,6 +40,7 @@ abstract class Order internal constructor(
         this.total = calculateTrade(price, quantity)
         this.price = price
         this.quantity = quantity
+        this.status = OrderStatus.OPEN
     }
 
     protected fun calculateTotalWithFee(price: BigDecimal, quantity: Int, fee: BigDecimal): BigDecimal {
@@ -53,6 +56,8 @@ abstract class Order internal constructor(
             throw OrderMinimumException("$quantity is not acceptable for integral shares")
         }
     }
+}
 
-
+enum class OrderStatus {
+    OPEN
 }
