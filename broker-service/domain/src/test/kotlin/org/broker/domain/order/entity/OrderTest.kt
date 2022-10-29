@@ -3,6 +3,7 @@ package org.broker.domain.order.entity
 import org.broker.domain.order.builder.newOrder
 import org.broker.domain.order.exception.InsufficientBalanceException
 import org.broker.domain.order.exception.InsufficientShareBalanceException
+import org.broker.domain.order.exception.MarketClosedException
 import org.broker.domain.order.exception.OrderMinimumException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -115,16 +116,30 @@ class OrderTest {
     @ParameterizedTest
     @MethodSource("closedMarket")
     fun `should not allow create an order after 5pm or before 10am`(utcTime: LocalDateTime) {
-        /* val now = ZonedDateTime.of(utcTime, ZoneId.of("UTC"))
-         val ex = assertThrows<MarketClosedException> { Order.create(balance = TEN, now = now) }
-         assertEquals("The market works only between 10am and 5pm", ex.message)*/
+        val closedMarketTime = ZonedDateTime.of(utcTime, ZoneId.of("UTC"))
+         val ex = assertThrows<MarketClosedException> {
+             newOrder {
+                 inTradeClock = closedMarketTime
+                buy {
+                    share = Share.EMPTY
+                    withBalance = TEN
+                }
+             }
+         }
+         assertEquals("The market works only between 10am and 5pm", ex.message)
     }
 
     @ParameterizedTest
     @MethodSource("openedMarket")
     fun `should allow only create an order between 10am and 5pm from Brazil time zone`(utcTime: LocalDateTime) {
-        /* val now = ZonedDateTime.of(utcTime, ZoneId.of("UTC"))
-         Order.create(balance = TEN, now = now)*/
+        val openedMarketTime = ZonedDateTime.of(utcTime, ZoneId.of("UTC"))
+        newOrder {
+            inTradeClock = openedMarketTime
+            buy {
+                share = Share.EMPTY
+                withBalance = TEN
+            }
+        }
     }
 
     companion object {
