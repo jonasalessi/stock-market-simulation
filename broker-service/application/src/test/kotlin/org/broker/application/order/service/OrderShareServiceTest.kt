@@ -1,7 +1,7 @@
 package org.broker.application.order.service
 
 import org.broker.application.order.fake.OrderRepositoryMem
-import org.broker.application.order.fake.ShareRepositoryMem
+import org.broker.application.order.fake.ShareGatewayMem
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeEach
@@ -16,7 +16,7 @@ class OrderShareServiceTest {
 
     @BeforeEach
     fun setup() {
-        orderShareService = OrderShareService(ShareRepositoryMem(), OrderRepositoryMem())
+        orderShareService = OrderShareService(ShareGatewayMem(), OrderRepositoryMem())
     }
 
     @Test

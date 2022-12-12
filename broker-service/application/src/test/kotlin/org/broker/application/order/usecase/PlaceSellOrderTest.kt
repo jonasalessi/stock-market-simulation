@@ -2,7 +2,7 @@ package org.broker.application.order.usecase
 
 import org.broker.application.order.fake.OrderEventEmitterMem
 import org.broker.application.order.fake.OrderRepositoryMem
-import org.broker.application.order.fake.ShareRepositoryMem
+import org.broker.application.order.fake.ShareGatewayMem
 import org.broker.application.order.fake.UserAccountGatewayMem
 import org.broker.application.order.ports.input.SellOrderCommand
 import org.broker.application.order.service.OrderShareService
@@ -28,7 +28,7 @@ import java.util.*
 
 class PlaceSellOrderTest {
     private lateinit var orderRepositoryMem: OrderRepositoryMem
-    private lateinit var shareRepositoryMem: ShareRepositoryMem
+    private lateinit var shareRepositoryMem: ShareGatewayMem
     private lateinit var userAccountGatewayMem: UserAccountGatewayMem
     private lateinit var eventEmitter: OrderEventEmitterMem
     private lateinit var placeOrder: PlaceSellOrder
@@ -41,7 +41,7 @@ class PlaceSellOrderTest {
     @BeforeEach
     fun setup() {
         orderRepositoryMem = OrderRepositoryMem()
-        shareRepositoryMem = ShareRepositoryMem()
+        shareRepositoryMem = ShareGatewayMem()
         eventEmitter = OrderEventEmitterMem()
         userAccountGatewayMem = UserAccountGatewayMem()
         placeOrder = PlaceSellOrder(
