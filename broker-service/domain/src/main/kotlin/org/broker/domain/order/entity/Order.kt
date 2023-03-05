@@ -5,6 +5,7 @@ import org.broker.domain.order.exception.OrderMinimumException
 import org.shared.domain.entity.AggregateRoot
 import org.shared.domain.entity.Share
 import org.shared.domain.entity.ShareCategory
+import org.shared.domain.vo.AccountId
 import org.shared.domain.vo.OrderId
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -12,6 +13,7 @@ import java.time.ZonedDateTime
 
 abstract class Order internal constructor(
     override val id: OrderId,
+    private val accountId: AccountId,
     private val inTradeClock: ZonedDateTime,
     private val share: Share
 ) : AggregateRoot<OrderId>() {

@@ -1,6 +1,6 @@
 package org.broker.application.account.usecase
 
-import org.broker.application.account.fake.AccountEventEmitterMem
+import org.broker.application.account.fake.AccountEventPublisherMem
 import org.broker.application.account.fake.AccountRepositoryMem
 import org.broker.application.account.ports.input.CreateAccountCommand
 import org.broker.domain.account.exception.CpfDuplicatedException
@@ -22,13 +22,13 @@ class CreateAccountTest {
         country = "Brazil",
         cpf = "797.512.620-97"
     )
-    private lateinit var investorAccountEventEmitter: AccountEventEmitterMem
+    private lateinit var investorAccountEventEmitter: AccountEventPublisherMem
     private lateinit var repository: AccountRepositoryMem
     private lateinit var createAccount: CreateAccount
 
     @BeforeEach
     fun setup() {
-        investorAccountEventEmitter = AccountEventEmitterMem()
+        investorAccountEventEmitter = AccountEventPublisherMem()
         repository = AccountRepositoryMem()
         createAccount = CreateAccount(investorAccountEventEmitter, repository)
     }

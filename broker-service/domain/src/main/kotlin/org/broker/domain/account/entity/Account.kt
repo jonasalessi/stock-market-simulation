@@ -36,6 +36,11 @@ class Account private constructor(
     }
 
     companion object {
+
+        /**
+         * Simple build using the benefit of named parameters.</br>
+         * For more complex builds using DSL check it out {@link OrderBuilder}
+         */
         fun build(withName: String, withBirthday: LocalDate, withCity: String, withCountry: String, withCpf: Cpf) =
             Account(
                 id = AccountId(UUID.randomUUID()),

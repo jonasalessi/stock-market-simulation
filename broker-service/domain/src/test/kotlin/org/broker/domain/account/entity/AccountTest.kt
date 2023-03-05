@@ -55,15 +55,14 @@ class AccountTest {
         assertEquals("Reject the account is only allowed in document verification stage", rejectEx.message)
     }
 
-    private fun createAccount(birthday: LocalDate = LocalDate.of(1990, 2, 14)): Account {
-        val account = Account.build(
+    private fun createAccount(birthday: LocalDate = LocalDate.of(1990, 2, 14)): Account =
+        Account.build(
             withName = "Jonas Alessi",
             withBirthday = birthday,
             withCity = "Florianópolis",
             withCountry = "Brazil",
             withCpf = Cpf("797.512.620-97")
         )
-        return account
-    }
+
 
 }

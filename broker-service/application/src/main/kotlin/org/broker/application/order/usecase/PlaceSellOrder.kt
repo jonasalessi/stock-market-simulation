@@ -26,11 +26,13 @@ internal class PlaceSellOrder(
 ) : CommandHandler<SellOrderCommand> {
 
     override fun handle(command: SellOrderCommand) {
+        // TODO add security check if the account is from the user that is requesting
         val (shareId, price, quantity, accountId) = command
         val companyShare = orderShareService.findShareById(shareId)
         val accountShareBalance = getAccountShareBalance(accountId, shareId)
         val order = newOrder {
             inTradeClock = clock.now()
+            account = accountId
             sell {
                 myShareBalance = accountShareBalance
                 share = companyShare

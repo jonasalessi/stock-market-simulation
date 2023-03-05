@@ -1,7 +1,7 @@
 package org.broker.application.account.handler
 
-import org.broker.application.account.fake.AccountEventEmitterMem
-import org.broker.application.account.ports.input.AccountCreatedNotification
+import org.broker.application.account.fake.AccountEventPublisherMem
+import org.broker.application.account.ports.input.AccountCreatedEvent
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,11 +12,11 @@ import org.shared.domain.vo.AccountId
 import java.util.*
 
 class CheckAccountDocumentTest {
-    private lateinit var investorAccountEventEmitter: AccountEventEmitterMem
+    private lateinit var investorAccountEventEmitter: AccountEventPublisherMem
 
     @BeforeEach
     fun setup() {
-        investorAccountEventEmitter = AccountEventEmitterMem()
+        investorAccountEventEmitter = AccountEventPublisherMem()
     }
 
     @Test
@@ -33,7 +33,7 @@ class CheckAccountDocumentTest {
         Assertions.assertInstanceOf(AccountRejected::class.java, investorAccountEventEmitter.events.first())
     }
 
-    private fun accountCreated(accountId: AccountId, cpf: String) = AccountCreatedNotification(
+    private fun accountCreated(accountId: AccountId, cpf: String) = AccountCreatedEvent(
         AccountCreated(accountId, cpf)
     )
 }

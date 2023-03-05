@@ -31,6 +31,7 @@ internal class PlaceBuyOrder(
         val financialBalance = getAccountBalance(accountId)
         val order = newOrder {
             inTradeClock = clock.now()
+            account = accountId
             buy {
                 share = companyShare
                 withBalance = financialBalance

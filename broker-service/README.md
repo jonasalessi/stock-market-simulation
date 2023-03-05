@@ -30,5 +30,5 @@ Below the use cases with the functional requirements.
         - Share are divided in 2 categories, fractional(minimum 1 share) and integral(chunks of 100)
         - The fee is 2% to buy and 5% to sell
     - Post Conditions
-      - An order should be sent to the Stock Exchange and marked as open
+      - An order should be marked as open and sent to the Stock Exchange
 

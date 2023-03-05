@@ -1,12 +1,12 @@
 package org.broker.application.account.fake
 
-import org.broker.application.account.ports.output.AccountEventEmitter
+import org.broker.application.account.ports.output.AccountEventPublisher
 import org.shared.domain.event.account.AccountApproved
 import org.shared.domain.event.account.AccountCreated
 import org.shared.domain.event.account.AccountRejected
 import org.shared.domain.vo.AccountId
 
-class AccountEventEmitterMem : AccountEventEmitter {
+class AccountEventPublisherMem : AccountEventPublisher {
 
     val events = mutableListOf<Any>()
 
