@@ -1,24 +1,26 @@
 package org.broker.application.account.fake
 
-import org.broker.application.account.ports.output.AccountEventPublisher
+import org.broker.application.account.ports.output.AccountAnalysisPublisher
+import org.broker.application.account.ports.output.AccountCreatePublisher
 import org.shared.domain.event.account.AccountApproved
 import org.shared.domain.event.account.AccountCreated
 import org.shared.domain.event.account.AccountRejected
-import org.shared.domain.vo.AccountId
 
-class AccountEventPublisherMem : AccountEventPublisher {
+class AccountEventPublisherMem : AccountCreatePublisher, AccountAnalysisPublisher {
 
     val events = mutableListOf<Any>()
 
-    override fun emitAccountCreated(id: AccountId, cpf: String) {
-        events += AccountCreated(id, cpf)
+    override fun pub(accountCreated: AccountCreated) {
+        events += accountCreated
     }
 
-    override fun emitAccountApproved(id: AccountId) {
-        events += AccountApproved(id)
+    override fun pub(accountApproved: AccountApproved) {
+        events += accountApproved
     }
 
-    override fun emitAccountRejected(id: AccountId) {
-        events += AccountRejected(id)
+    override fun pub(accountRejected: AccountRejected) {
+        events += accountRejected
     }
+
+
 }

@@ -46,7 +46,7 @@ class ApproveAccountTest {
             withCpf = Cpf("797.512.620-97")
         )
         val accountId = account.id
-        repository.save(account)
+        repository.create(account)
         approveAccount.handle(AccountApprovedEvent(AccountApproved(accountId)))
         assertEquals(AccountStatus.WAITING_DEPOSIT, repository.findById(accountId)?.status)
     }

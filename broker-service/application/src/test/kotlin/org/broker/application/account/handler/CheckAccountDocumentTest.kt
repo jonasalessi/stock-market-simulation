@@ -12,25 +12,25 @@ import org.shared.domain.vo.AccountId
 import java.util.*
 
 class CheckAccountDocumentTest {
-    private lateinit var investorAccountEventEmitter: AccountEventPublisherMem
+    private lateinit var eventPublisher: AccountEventPublisherMem
 
     @BeforeEach
     fun setup() {
-        investorAccountEventEmitter = AccountEventPublisherMem()
+        eventPublisher = AccountEventPublisherMem()
     }
 
     @Test
     fun `should emit the event AccountApproved when CPF starts with even`() {
-        val handler = CheckAccountDocument(investorAccountEventEmitter)
+        val handler = CheckAccountDocument(eventPublisher)
         handler.handle(accountCreated(AccountId(UUID.randomUUID()), "200.000.000-00"))
-        Assertions.assertInstanceOf(AccountApproved::class.java, investorAccountEventEmitter.events.first())
+        Assertions.assertInstanceOf(AccountApproved::class.java, eventPublisher.events.first())
     }
 
     @Test
     fun `should emit the event AccountRejected when CPF starts with odd`() {
-        val handler = CheckAccountDocument(investorAccountEventEmitter)
+        val handler = CheckAccountDocument(eventPublisher)
         handler.handle(accountCreated(AccountId(UUID.randomUUID()), "300.000.000-00"))
-        Assertions.assertInstanceOf(AccountRejected::class.java, investorAccountEventEmitter.events.first())
+        Assertions.assertInstanceOf(AccountRejected::class.java, eventPublisher.events.first())
     }
 
     private fun accountCreated(accountId: AccountId, cpf: String) = AccountCreatedEvent(
