@@ -1,7 +1,7 @@
 rootProject.name = "stock-market"
 
 pluginManagement {
-    includeBuild("/build-plugins/kotlin-base")
+    includeBuild("build-plugins/kotlin-base")
 }
 
 include("broker-service")
