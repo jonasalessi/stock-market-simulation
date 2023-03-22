@@ -10,4 +10,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'gradle'
-      - run: ./gradlew test --no-daemon
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Running tests
+        run: ./gradlew test --no-daemon
