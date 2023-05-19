@@ -7,6 +7,7 @@ import org.shared.domain.vo.AccountId
 
 interface AccountRepository {
     fun create(account: Account): AccountCreated
+    fun update(account: Account)
     fun existsByCpf(cpf: Cpf): Boolean
     fun findById(id: AccountId): Account?
 }

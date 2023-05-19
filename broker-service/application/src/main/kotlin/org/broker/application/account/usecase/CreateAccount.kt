@@ -3,7 +3,7 @@ package org.broker.application.account.usecase
 import com.trendyol.kediatr.CommandHandler
 import io.quarkus.runtime.Startup
 import org.broker.application.account.ports.input.CreateAccountCommand
-import org.broker.application.account.ports.output.AccountCreatePublisher
+import org.broker.application.account.ports.output.AccountCreatorPublisher
 import org.broker.application.account.ports.output.AccountRepository
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.exception.CpfDuplicatedException
@@ -13,7 +13,7 @@ import javax.enterprise.context.ApplicationScoped
 @ApplicationScoped
 @Startup
 class CreateAccount(
-    private val accountCreated: AccountCreatePublisher,
+    private val accountCreated: AccountCreatorPublisher,
     private val repository: AccountRepository
 ) : CommandHandler<CreateAccountCommand> {
 
