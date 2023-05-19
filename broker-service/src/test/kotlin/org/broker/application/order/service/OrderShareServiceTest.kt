@@ -1,7 +1,7 @@
 package org.broker.application.order.service
 
-import org.broker.application.order.fake.OrderRepositoryMem
-import org.broker.application.order.fake.ShareGatewayMem
+import org.broker.infra.fakedb.order.OrderRepositoryMem
+import org.broker.infra.fakedb.order.ShareGatewayMem
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeEach

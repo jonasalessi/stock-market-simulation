@@ -1,11 +1,13 @@
-package org.broker.application.account.fake
+package org.broker.infra.fakedb.account
 
 import org.broker.application.account.ports.output.AccountRepository
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.vo.Cpf
 import org.shared.domain.event.account.AccountCreated
 import org.shared.domain.vo.AccountId
+import jakarta.enterprise.context.ApplicationScoped
 
+@ApplicationScoped
 class AccountRepositoryMem : AccountRepository {
     val data = mutableMapOf<AccountId, Account>()
 

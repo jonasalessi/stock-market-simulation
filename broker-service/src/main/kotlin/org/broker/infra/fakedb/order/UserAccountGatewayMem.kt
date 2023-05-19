@@ -1,10 +1,12 @@
-package org.broker.application.order.fake
+package org.broker.infra.fakedb.order
 
 import org.broker.application.order.ports.output.UserAccountGateway
 import org.shared.domain.vo.AccountId
 import org.shared.domain.vo.ShareId
 import java.math.BigDecimal
+import jakarta.enterprise.context.ApplicationScoped
 
+@ApplicationScoped
 class UserAccountGatewayMem : UserAccountGateway {
     private val accountBalance = mutableMapOf<AccountId, BigDecimal>()
     private val shareQuantity = mutableMapOf<String, Int>()

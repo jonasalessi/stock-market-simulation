@@ -6,7 +6,7 @@ import org.broker.application.account.ports.input.AccountCreatedEvent
 import org.broker.application.account.ports.output.AccountAnalyzerPublisher
 import org.shared.domain.event.account.AccountApproved
 import org.shared.domain.event.account.AccountRejected
-import javax.enterprise.context.ApplicationScoped
+import jakarta.enterprise.context.ApplicationScoped
 import kotlin.random.Random
 
 /**
@@ -20,7 +20,7 @@ class CheckAccountDocument(
     private val publisher: AccountAnalyzerPublisher
 ) : NotificationHandler<AccountCreatedEvent> {
 
-    override fun handle(notification: AccountCreatedEvent) {
+    override suspend fun handle(notification: AccountCreatedEvent) {
         Thread.sleep(Random.nextLong(1000, 10_000))
         val (accountCreated) = notification
         if ((accountCreated.cpf.substring(0, 1).toInt() % 2) == 0) {

@@ -8,7 +8,7 @@ import org.broker.application.account.ports.output.AccountRepository
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.exception.CpfDuplicatedException
 import org.broker.domain.account.vo.Cpf
-import javax.enterprise.context.ApplicationScoped
+import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 @Startup
@@ -17,7 +17,7 @@ class CreateAccount(
     private val repository: AccountRepository
 ) : CommandHandler<CreateAccountCommand> {
 
-    override fun handle(command: CreateAccountCommand) {
+    override suspend fun handle(command: CreateAccountCommand) {
         val cpf = Cpf(command.cpf)
         if (repository.existsByCpf(cpf)) throw CpfDuplicatedException(cpf)
         val account = Account.build(

@@ -6,7 +6,7 @@ import org.broker.domain.order.entity.Order
 import org.shared.domain.entity.Share
 import org.shared.domain.exception.ShareNotFoundException
 import org.shared.domain.vo.ShareId
-import javax.enterprise.context.ApplicationScoped
+import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class OrderShareService(

@@ -1,7 +1,7 @@
 package org.broker.application.account.usecase
 
-import org.broker.application.account.fake.AccountEventPublisherMem
-import org.broker.application.account.fake.AccountRepositoryMem
+import org.broker.infra.fakedb.account.AccountEventPublisherMem
+import org.broker.infra.fakedb.account.AccountRepositoryMem
 import org.broker.application.account.ports.input.CreateAccountCommand
 import org.broker.domain.account.exception.CpfDuplicatedException
 import org.broker.domain.account.vo.Cpf
@@ -34,7 +34,7 @@ class CreateAccountTest {
     }
 
     @Test
-    fun `should create the event AccountCreated when a new investor account is created`() {
+    suspend fun `should create the event AccountCreated when a new investor account is created`() {
         createAccount.handle(command)
 
         assertEquals(1, investorAccountEventEmitter.events.size) { "Should generate an event" }
@@ -43,7 +43,7 @@ class CreateAccountTest {
     }
 
     @Test
-    fun `should persist a new account when CPF 79751262097 account does not exist`() {
+    suspend fun `should persist a new account when CPF 79751262097 account does not exist`() {
         createAccount.handle(command)
 
         assertEquals(1, repository.data.size) {"Should save the new investor with cpf ${command.cpf}"}
@@ -52,7 +52,7 @@ class CreateAccountTest {
     }
 
     @Test
-    fun `should not accept a duplicated account by cpf`() {
+    suspend fun `should not accept a duplicated account by cpf`() {
         createAccount.handle(command)
 
         assertThrows<CpfDuplicatedException> { createAccount.handle(command) }

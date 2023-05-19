@@ -13,7 +13,7 @@ import org.shared.domain.event.order.OrderCreated
 import org.shared.domain.event.order.OrderType
 import org.shared.domain.vo.AccountId
 import java.math.BigDecimal
-import javax.enterprise.context.ApplicationScoped
+import jakarta.enterprise.context.ApplicationScoped
 
 
 @ApplicationScoped
@@ -25,7 +25,7 @@ internal class PlaceBuyOrder(
     private val eventEmitter: OrderEventEmitter
 ) : CommandHandler<BuyOrderCommand> {
 
-    override fun handle(command: BuyOrderCommand) {
+    override suspend fun handle(command: BuyOrderCommand) {
         val (shareId, price, quantity, accountId) = command
         val companyShare = orderShareService.findShareById(shareId)
         val financialBalance = getAccountBalance(accountId)

@@ -1,7 +1,7 @@
 package org.broker.application.account.handler
 
 import org.broker.application.account.ports.input.AccountApprovedEvent
-import org.broker.application.account.fake.AccountRepositoryMem
+import org.broker.infra.fakedb.account.AccountRepositoryMem
 import org.broker.domain.account.entity.Account
 import org.broker.domain.account.exception.AccountNotFoundException
 import org.broker.domain.account.vo.AccountStatus
@@ -27,7 +27,7 @@ class ApproveAccountTest {
     }
 
     @Test
-    fun `should return an exception AccountNotFoundException when the account does not exist`() {
+    suspend fun `should return an exception AccountNotFoundException when the account does not exist`() {
         val accountId = AccountId(UUID.fromString("43519dc2-aca0-40d2-b006-6cc64903be71"))
         val notification = AccountApprovedEvent((AccountApproved(accountId)))
         val ex = assertThrows<AccountNotFoundException> {
@@ -37,7 +37,7 @@ class ApproveAccountTest {
     }
 
     @Test
-    fun `should update the account status to waiting deposit when the account is approved`() {
+    suspend fun `should update the account status to waiting deposit when the account is approved`() {
         val account = Account.build(
             withName = "Jonas Alessi",
             withBirthday = LocalDate.of(1990, 2, 14),

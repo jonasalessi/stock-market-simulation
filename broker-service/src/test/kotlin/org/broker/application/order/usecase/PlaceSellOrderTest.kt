@@ -1,9 +1,9 @@
 package org.broker.application.order.usecase
 
-import org.broker.application.order.fake.OrderEventEmitterMem
-import org.broker.application.order.fake.OrderRepositoryMem
-import org.broker.application.order.fake.ShareGatewayMem
-import org.broker.application.order.fake.UserAccountGatewayMem
+import org.broker.infra.fakedb.order.OrderEventEmitterMem
+import org.broker.infra.fakedb.order.OrderRepositoryMem
+import org.broker.infra.fakedb.order.ShareGatewayMem
+import org.broker.infra.fakedb.order.UserAccountGatewayMem
 import org.broker.application.order.ports.input.SellOrderCommand
 import org.broker.application.order.service.OrderShareService
 import org.broker.application.order.stub.TraderClockStub
@@ -53,7 +53,7 @@ class PlaceSellOrderTest {
     }
 
     @Test
-    fun `should return an exception AccountShareNotFoundException when the Jackson account does not exists`() {
+    suspend fun `should return an exception AccountShareNotFoundException when the Jackson account does not exists`() {
         persistIntegralShare()
         val ex = assertThrows<AccountShareNotFoundException> {
             placeOrder.handle(
@@ -72,7 +72,7 @@ class PlaceSellOrderTest {
     }
 
     @Test
-    fun `should publish an opened event when order saved and traded`() {
+    suspend fun `should publish an opened event when order saved and traded`() {
         persistIntegralShare()
         persistJacksonAccountBalance()
         val share = ShareId("GGBR4")

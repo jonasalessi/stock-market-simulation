@@ -13,7 +13,7 @@ import org.shared.domain.event.order.OrderType
 import org.shared.domain.exception.ShareNotFoundException
 import org.shared.domain.vo.AccountId
 import org.shared.domain.vo.ShareId
-import javax.enterprise.context.ApplicationScoped
+import jakarta.enterprise.context.ApplicationScoped
 
 
 @ApplicationScoped
@@ -25,7 +25,7 @@ internal class PlaceSellOrder(
     private val eventEmitter: OrderEventEmitter
 ) : CommandHandler<SellOrderCommand> {
 
-    override fun handle(command: SellOrderCommand) {
+    override suspend fun handle(command: SellOrderCommand) {
         // TODO add security check if the account is from the user that is requesting
         val (shareId, price, quantity, accountId) = command
         val companyShare = orderShareService.findShareById(shareId)
