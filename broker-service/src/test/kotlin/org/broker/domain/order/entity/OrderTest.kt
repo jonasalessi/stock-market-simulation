@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.shared.domain.entity.Share
 import org.shared.domain.entity.ShareCategory.FRACTIONAL
 import org.shared.domain.entity.ShareCategory.INTEGRAL
+import org.shared.domain.vo.AccountId
 import org.shared.domain.vo.ShareId
 import java.math.BigDecimal
 import java.math.BigDecimal.TEN
@@ -32,6 +33,7 @@ class OrderTest {
     fun `should accept a buy only when have the balance equivalent to the total amount plus 2 percent`() {
         val stock = Share(id = ShareId("XX3F"), category = FRACTIONAL)
         val orderWithoutBalance = newOrder {
+            account = AccountId(UUID.randomUUID())
             buy {
                 share = stock
                 withBalance = TEN
@@ -40,6 +42,7 @@ class OrderTest {
         }
 
         val orderWithBalance = newOrder {
+            account = AccountId(UUID.randomUUID())
             buy {
                 share = stock
                 withBalance = BigDecimal(12)
@@ -57,6 +60,7 @@ class OrderTest {
     fun `should accept order with minimum 1 share for fractional ticker`() {
         val order = newOrder {
             inTradeClock = openTime
+            account = AccountId(UUID.randomUUID())
             buy {
                 share = Share(
                     id = ShareId("XX3F"),
@@ -80,6 +84,7 @@ class OrderTest {
     fun `should accept order with minimum 100 and chunks of 100 shares for integral ticker`() {
         val order = newOrder {
             inTradeClock = openTime
+            account = AccountId(UUID.randomUUID())
             sell {
                 share = Share(
                     id = ShareId("XX3F"),
@@ -103,6 +108,7 @@ class OrderTest {
     fun `should sell only when have the minimum quantity of company shares`() {
         val order = newOrder {
             inTradeClock = openTime
+            account = AccountId(UUID.randomUUID())
             sell {
                 myShareBalance = 10
                 share = Share(id = ShareId("XX3F"), category = FRACTIONAL)
@@ -120,6 +126,7 @@ class OrderTest {
          val ex = assertThrows<MarketClosedException> {
              newOrder {
                  inTradeClock = closedMarketTime
+                 account = AccountId(UUID.randomUUID())
                 buy {
                     share = Share.EMPTY
                     withBalance = TEN
@@ -134,6 +141,7 @@ class OrderTest {
     fun `should allow only create an order between 10am and 5pm from Brazil time zone`(utcTime: LocalDateTime) {
         val openedMarketTime = ZonedDateTime.of(utcTime, ZoneId.of("UTC"))
         newOrder {
+            account = AccountId(UUID.randomUUID())
             inTradeClock = openedMarketTime
             buy {
                 share = Share.EMPTY

@@ -43,7 +43,13 @@ class OrderBuilder {
         BuyableBuilder().apply(setup)
             .also {
                 buildOrder = {
-                    OrderBuyable(OrderId(UUID.randomUUID()), account!!, inTradeClock!!, it.share, it.withBalance)
+                    OrderBuyable(
+                        OrderId(UUID.randomUUID()),
+                        account ?: throw IllegalArgumentException("Account is required"),
+                        inTradeClock ?: throw IllegalArgumentException("Time is required"),
+                        it.share,
+                        it.withBalance
+                    )
                 }
             }
 
@@ -54,8 +60,8 @@ class OrderBuilder {
                 buildOrder = {
                     OrderSellable(
                         OrderId(UUID.randomUUID()),
-                        account!!,
-                        inTradeClock!!,
+                        account ?: throw IllegalArgumentException("Account is required"),
+                        inTradeClock ?: throw IllegalArgumentException("Time is required"),
                         it.share,
                         it.myShareBalance
                     )
