@@ -5,9 +5,5 @@ pluginManagement {
 }
 
 include("broker-service")
-include("broker-service:domain")
-include("broker-service:application")
-include("broker-service:infra")
-
 include("shared")
 include("shared:domain")
