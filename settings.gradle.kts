@@ -1,9 +1,12 @@
 rootProject.name = "stock-market"
-
 pluginManagement {
-    includeBuild("/build-plugins/kotlin-base")
+    repositories {
+        maven { url = uri("https://repo.spring.io/milestone") }
+        maven { url = uri("https://repo.spring.io/snapshot") }
+        gradlePluginPortal()
+        mavenLocal()
+    }
+   includeBuild("/build-plugins")
 }
-
-include("broker-service")
-include("shared")
 include("shared:domain")
+include("broker")
